@@ -172,6 +172,7 @@ videojs.Hls.prototype.src = function(src) {
     // maintain our position at the live point.
     if (this.duration() === Infinity && this.mediaIndex === 0) {
       this.mediaIndex = videojs.Hls.getMediaIndexForLive_(oldMediaPlaylist);
+      this.setCurrentTime(this.getCurrentTimeByMediaIndex_(this.playlists.media(), this.mediaIndex));
     }
 
     selectedPlaylist = this.selectPlaylist();
@@ -272,7 +273,6 @@ videojs.Hls.prototype.handleSourceOpen = function() {
 
   this.sourceBuffer = sourceBuffer;
   sourceBuffer.appendBuffer(this.segmentParser_.getFlvHeader());
-
 
   // if autoplay is enabled, begin playback. This is duplicative of
   // code in video.js but is required because play() must be invoked
